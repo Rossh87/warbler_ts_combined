@@ -1,0 +1,2 @@
+#Versioning
+-design_doc.md (in project root) will be updated for each commit/merge to master.  It should provide a quick snapshot of modifications made by each commit (in addition to commit messages, of course).
