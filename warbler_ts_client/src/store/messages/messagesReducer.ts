@@ -20,7 +20,7 @@ const filterDeletedMessage = (state: AllMessages, msgID: Message['_id']): AllMes
 	);
 };
 
-export const messagesReducer = (state: AllMessages, action: MessagesAction): AllMessages => {
+const messagesReducer = (state: AllMessages = [], action: MessagesAction): AllMessages => {
 	switch (action.type) {
 		case getType(populateMessages):
 			return [...action.payload];
@@ -38,4 +38,6 @@ export const messagesReducer = (state: AllMessages, action: MessagesAction): All
 			break;
 	}
 };
+
+export default messagesReducer;
 
