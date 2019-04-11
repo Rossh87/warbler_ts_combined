@@ -1,10 +1,17 @@
-import * as React from 'react'
+import React from 'react'
+import Navbar from '../Navbar';
+import AuthModal from '../AuthModal';
 
 const App = () => {
 	return(
-		<h1>
-			Hello World!
-		</h1>
+		<React.Fragment>
+			<Navbar />
+			<AuthModal somedata='astring' />
+			<button>
+				<a href='http://localhost:8001/auth/google'>Gauth</a>
+			</button>
+		</React.Fragment>
+		
 	)
 }
 export default App;
