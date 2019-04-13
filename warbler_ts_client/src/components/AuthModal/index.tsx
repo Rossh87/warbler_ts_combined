@@ -26,8 +26,8 @@ const AuthModal: React.FC<Props> = (props) => {
             <List>
                 <ListItem 
                     button
-                    onClick={async() => {
-                        const res = await axios.get('http://localhost:8001/auth/google');
+                    onClick={() => {
+                        const res = axios.get('http://localhost:8001/auth/google');
                         console.log(res);
                     }}
                 >

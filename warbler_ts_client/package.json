@@ -1,5 +1,5 @@
 {
-  "name": "warbler_ts_refactor",
+  "name": "warbler_ts_client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,7 +19,6 @@
     "redux": "^4.0.1",
     "typescript": "^3.3.3333"
   },
-  "proxy": "http://localhost:8001/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
