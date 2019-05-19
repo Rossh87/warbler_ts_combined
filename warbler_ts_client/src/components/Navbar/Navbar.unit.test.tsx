@@ -1,6 +1,20 @@
 import React from 'react';
-import {Navbar} from '.';
-import {render, cleanup} from 'react-testing-library';
+import Navbar from '.';
+import {render, ProviderRoot, cleanup, fireEvent} from '../../utils/testUtils';
+import { Provider } from 'react-redux';
+import {withRouter} from 'react-router-dom';
+
+const mockAuthorizedState = {
+    user: {
+        isAuthorized: true
+    }
+}
+
+const mockUnauthorizedState = {
+    user: {
+        isAuthorized: false
+    }
+};
 
 afterEach(() => {
     cleanup();
@@ -8,18 +22,13 @@ afterEach(() => {
 
 describe('The UI component AppBar', () => {
     it('shows "signup" and "signin" if user is not authorized', () => {
-        const {getByText} = render(<Navbar user={{isAuthorized: false}} />);
-
-        expect(getByText('SIGNUP')).not.toBe(null);
-        expect(getByText('SIGNIN')).not.toBe(null);
+        const {getByText} = render(<ProviderRoot mockStore={mockUnauthorizedState}><Navbar/></ProviderRoot>);
+        expect(getByText('signin')).not.toBe(null);
     });
 
     it('shows logout message if user is authorized', () => {
-        const {getByText} = render(<Navbar user={{isAuthorized: true}} />);
+        const {getByText} = render(<ProviderRoot mockStore={mockAuthorizedState}><Navbar/></ProviderRoot>);
 
-        expect(getByText('LOGOUT')).not.toBe(null);
-
-        expect(getByText('SIGNUP')).toBe(null);
-        expect(getByText('SIGNIN')).toBe(null);
+        expect(getByText('signout')).not.toBe(null);
     });
 });

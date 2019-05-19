@@ -13,15 +13,20 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 // Get main reducer
 import rootReducer from './rootReducer';
 
-// Export the 'bare' store for possible use in testing
-export const bareStore = createStore(
-    rootReducer,
-    composeWithDevTools()
-);
+interface Props {
+    mockStore?: {}
+}
 
 // Store component renders all children with access to
 // redux store for reuse in testing
-const Store: React.FC = ({children}) => {
+const Store: React.FC<Props> = ({children, mockStore}) => {
+
+    const bareStore = createStore(
+        rootReducer,
+        mockStore,
+        composeWithDevTools()
+    );
+
     return(
         <Provider store={bareStore}>
             { children }

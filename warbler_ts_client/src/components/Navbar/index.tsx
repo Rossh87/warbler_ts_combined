@@ -3,6 +3,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 
+// Navbar lives in no particular route, so we need HOC
+// to make history object available.
+import {withRouter, RouteComponentProps} from 'react-router-dom';
+
 // Type for entire redux state
 import {RootState} from '../../store/rootReducer';
 
@@ -18,24 +22,22 @@ import {withStyles, WithStyles} from '@material-ui/core/styles';
 // Get custom styles object
 import styles from './styles';
 
-interface Props extends WithStyles<typeof styles> {
+interface Props extends RouteComponentProps<any>, WithStyles<typeof styles> {
     user: RootState['user']
-}
+};
 
 // Export unconnected component for ease of testing
-export const Navbar: React.FC<Props> = ({classes, user}) => {
+export const Navbar: React.FC<Props> = ({classes, user, history}) => {
     const renderButtons = (authStatus: boolean) => {
         return authStatus ?
-            <Button color='inherit'>Logout</Button>
+            <Button color='inherit'>signout</Button>
             :
-            <div>
-                <Button variant='contained' color='inherit'>Signup</Button>
-                
-                <Button variant='contained' color='inherit'>Signin</Button>
+            <div>                
+                <Button onClick={() => history.push('/signin')} variant='contained' color='inherit'>signin</Button>
             </div>
     };
-
 	return(
+        
         <div className={classes.root}>
             <AppBar>
                 <Toolbar>
@@ -56,4 +58,4 @@ const mapStateToProps = (state: RootState) => ({
     user: state.user
 });
 
-export default withStyles(styles)(connect(mapStateToProps)(Navbar));
+export default withStyles(styles)(connect(mapStateToProps)(withRouter(Navbar)));

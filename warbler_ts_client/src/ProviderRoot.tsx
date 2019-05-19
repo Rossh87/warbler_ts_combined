@@ -8,14 +8,17 @@ import {BrowserRouter as Router} from 'react-router-dom';
 // w/ store provider
 import Store from './store';
 
-const ProviderRoot: React.FC = ({children}) => {
+interface Props {
+    mockStore?: {}
+};
+
+export const ProviderRoot: React.FC<Props> = ({children, mockStore}) => {
     return(
         <Router>
-            <Store>
+            <Store mockStore={mockStore}>
                 {children}
             </Store>
         </Router>
     )
 };
 
-export default ProviderRoot;
