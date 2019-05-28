@@ -1,9 +1,20 @@
 // Type of user prop (state) in redux store
 export interface UserState {
-	userName: string,
-	profileImg: string,
-	// Option to create a Date type to make this more specific
-	createdAt: string,
+	displayName: string,
+
+    name: {
+        familyName: string,
+        givenName: string
+    },
+
+    provider: string,
+
+    photos: {value: string} [],
+
+    emails: {value: string} [],
+
+	messages: string [],
+	
 	isAuthorized: boolean
 }
 

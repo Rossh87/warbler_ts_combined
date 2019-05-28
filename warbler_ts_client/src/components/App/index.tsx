@@ -14,7 +14,7 @@ const App: React.FC = () => {
 			<Switch>
 				<Route exact path='/' component={Landing} />
 				<Route path='/signin' component={AuthModal} />
-				<Route path='/user/:id' component={AuthModal} />
+				<Route path='/users/:id' component={Main} />
 			</Switch>
 		</React.Fragment>
 		

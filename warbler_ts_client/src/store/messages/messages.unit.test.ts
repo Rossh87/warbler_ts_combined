@@ -20,13 +20,13 @@ beforeEach(() => {
          _id: '1',
          text: 'someString',
          createdAt: 'datestring',
-         authorID: 'Ross Hunter'
+         author: 'Ross Hunter'
         },
         {
         _id: '2',
         text: 'someString2',
         createdAt: 'datestring',
-        authorID: 'Ross Hunterson'
+        author: 'Ross Hunterson'
         }
     ];
 
@@ -63,7 +63,7 @@ describe('The messages reducer function', () => {
                 _id: '2',
                 text: 'someString2',
                 createdAt: 'datestring',
-                authorID: 'Ross Hunterson'
+                author: 'Ross Hunterson'
             }
         ];
 
