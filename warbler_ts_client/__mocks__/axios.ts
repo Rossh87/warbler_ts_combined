@@ -11,7 +11,7 @@ const selectMockDataFromURL = (url: string) => {
     switch(path) {
         case 'messages':
             return mockMessages
-        case 'users/1':
+        case 'user':
             return mockUser
     }
 }

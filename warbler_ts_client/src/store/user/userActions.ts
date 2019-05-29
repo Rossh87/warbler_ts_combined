@@ -1,10 +1,10 @@
 // Helper functions to reduce boilerplate and obviate constants as action.type
 import { createAction, ActionType } from 'typesafe-actions';
 
-import { UserState } from './userTypes';
+import { INetUser } from '../../utils/networkTypes';
 
 export const populateUser = createAction('user/POPULATE_USER', action => {
-	return (userData: UserState) => action(userData);
+	return (userData: INetUser) => action(userData);
 });
 
 export const depopulateUser = createAction('user/DEPOPULATE_USER')

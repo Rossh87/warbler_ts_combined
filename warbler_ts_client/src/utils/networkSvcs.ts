@@ -10,8 +10,11 @@ axios.defaults.withCredentials = true;
 
 // Get action creators
 import {populateMessages} from '../store/messages/messagesActions';
+import {populateUser} from '../store/user/userActions';
+import { useEffect } from 'react';
 
-// Export this function for testing--this is where the logic resides
+// Request all messages from API server and dispatch response.  We'll add the 
+// hook logic later, as it doesn't need to be unit tested
 export const fetchAllMsgs = async (url: string, dispatchFn: Dispatch) => {
     try {
         const res = await axios.get(url);
@@ -24,3 +27,33 @@ export const fetchAllMsgs = async (url: string, dispatchFn: Dispatch) => {
         console.error(err);
     }
 }
+
+// Request authorized user data from API server
+export const fetchUser = async (url: string, dispatchFn: Dispatch) => {
+    try {
+        const res = await axios.get(url);
+
+        dispatchFn(populateUser(res.data));
+    }
+
+    catch(err) {
+        // TODO: ADD ERROR HANDLING
+        console.error(err)
+    }
+}
+
+// Now we wrap our network handlers in useEffect to make hooks
+export const useFetchAllMsgs = (url: string, dispatch: Dispatch) => {
+    useEffect(() => {
+        fetchAllMsgs(url, dispatch);
+    }, [])
+};
+
+export const useFetchUser = (url: string, dispatch: Dispatch) => {
+    useEffect(() => {
+        fetchUser(url, dispatch)
+    }, []);
+}
+
+
+

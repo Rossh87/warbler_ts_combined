@@ -8,10 +8,21 @@ import { UserState } from './userTypes';
 import { populateUser, depopulateUser, UserAction } from './userActions';
 
 const initState: UserState = {
-	userName: '',
-	profileImg: '',
-	// Option to create a Date type to make this more specific
-	createdAt: '',
+	displayName: '',
+
+    name: {
+        familyName: '',
+        givenName: ''
+    },
+
+    provider: '',
+
+    photos: [],
+
+    emails: [],
+
+	messages: [],
+	
 	isAuthorized: false
 }
 
