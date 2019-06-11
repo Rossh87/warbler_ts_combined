@@ -18,8 +18,6 @@ interface Props extends WithStyles<typeof styles> {
     history: History
 };
 
-let T4: JSX.Element
-
 const AuthModal: React.FC<Props> = ({history}) => {
 
     return(
@@ -45,4 +43,5 @@ const AuthModal: React.FC<Props> = ({history}) => {
     )
 };
 
-export default withStyles(styles)(AuthModal);
+// export default withStyles(styles)(AuthModal);
+export default AuthModal;

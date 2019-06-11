@@ -1,7 +1,7 @@
 // Get React deps
 import React from 'react';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
+import {connect, DispatchProp} from 'react-redux';
+import {compose, Dispatch} from 'redux';
 
 // Navbar lives in no particular route, so we need HOC
 // to make history object available.
@@ -9,6 +9,8 @@ import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 // Type for entire redux state
 import {RootState} from '../../store/rootReducer';
+
+import {signOut} from '../../utils/networkSvcs';
 
 // Get Material UI deps
 import AppBar from '@material-ui/core/Toolbar';
@@ -22,15 +24,18 @@ import {withStyles, WithStyles} from '@material-ui/core/styles';
 // Get custom styles object
 import styles from './styles';
 
-interface Props extends RouteComponentProps<any>, WithStyles<typeof styles> {
-    user: RootState['user']
+interface Props extends RouteComponentProps, WithStyles<typeof styles> {
+    user: RootState['user'],
+    dispatch: Dispatch
 };
 
 // Export unconnected component for ease of testing
-export const Navbar: React.FC<Props> = ({classes, user, history}) => {
+export const Navbar: React.FC<Props> = ({classes, user, history, dispatch}) => {
     const renderButtons = (authStatus: boolean) => {
         return authStatus ?
-            <Button color='inherit'>signout</Button>
+            <Button onClick={() => signOut(dispatch)} color='inherit' variant='contained'>
+                <a href = 'http://localhost:8001/auth/signout'>Signout</a>
+            </Button>
             :
             <div>                
                 <Button onClick={() => history.push('/signin')} variant='contained' color='inherit'>signin</Button>
@@ -48,6 +53,9 @@ export const Navbar: React.FC<Props> = ({classes, user, history}) => {
                     Warbler
                     </Typography>
                     {renderButtons(user.isAuthorized)}
+                    <Button onClick={() => history.push('/messages/new')}>
+                        Create Message
+                    </Button>
                 </Toolbar>
             </AppBar>
         </div>

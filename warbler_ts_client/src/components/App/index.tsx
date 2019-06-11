@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import AuthModal from '../AuthModal';
 import Landing from '../Landing';
 import Main from '../Main';
+import MessageForm from '../MessageForm';
 
 const App: React.FC = () => {
 	return(
@@ -15,6 +16,7 @@ const App: React.FC = () => {
 				<Route exact path='/' component={Landing} />
 				<Route path='/signin' component={AuthModal} />
 				<Route path='/users/:id' component={Main} />
+				<Route path='/messages/new' component={MessageForm} />
 			</Switch>
 		</React.Fragment>
 		

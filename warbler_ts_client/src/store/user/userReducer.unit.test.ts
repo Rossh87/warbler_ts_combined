@@ -11,19 +11,41 @@ let initState: UserState, popState: UserState;
 
 beforeEach(() => {
     initState = {
-        userName: '',
-        profileImg: '',
-        // Option to create a Date type to make this more specific
-        createdAt: '',
+        displayName: '',
+
+        name: {
+            familyName: '',
+            givenName: ''
+        },
+
+        provider: '',
+
+        photos: [],
+
+        emails: [],
+
+        messages: [],
+        
         isAuthorized: false
     }
 
     popState = {
-        userName: 'Ross',
-        profileImg: 'someurl.com',
-        // Option to create a Date type to make this more specific
-        createdAt: '1234',
-        isAuthorized: true
+        displayName: 'someUser',
+
+        name: {
+            familyName: 'Khan',
+            givenName: 'Genghis'
+        },
+
+        provider: 'facebook',
+
+        photos: [{value: 'photourl.com'}],
+
+        emails: [{value: 'mail@mail.com'}],
+
+        messages: ['123', '456'],
+
+        isAuthorized: false
     }
 });
 

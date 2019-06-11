@@ -29,7 +29,7 @@ const initState: UserState = {
 const userReducer = (state = initState, action: UserAction): UserState => {
 	switch (action.type) {
 		case getType(populateUser):
-			return {...state, ...action.payload}
+			return {...state, ...action.payload, isAuthorized: true}
 			break;
 
 		case getType(depopulateUser):

@@ -1,4 +1,4 @@
-import {fetchAllMsgs, fetchUser} from './networkSvcs';
+import {fetchAllMsgs, fetchUser, createMessage} from './networkSvcs';
 
 // Jest automocks this by default
 import axios from 'axios';
@@ -47,4 +47,14 @@ describe('The function for fetching user data from API server', () => {
 
         expect(dispatch).toHaveBeenCalledWith(mockAction);
     })
-})
+});
+
+describe('The function to create a new message on the API server', () => {
+    it('makes a post request with the correct data', async () => {
+        const url = 'api/messages';
+        const data = 'This is a message string';
+        await createMessage(url, data);
+
+        expect(axios.post).toHaveBeenLastCalledWith(url, data)
+    });
+});
