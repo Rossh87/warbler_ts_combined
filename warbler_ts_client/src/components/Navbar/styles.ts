@@ -12,6 +12,9 @@ const styles = createStyles({
       marginLeft: -12,
       marginRight: 20,
     },
+    floatRight: {
+      justifyContent: 'space-between'
+    }
 });
 
 

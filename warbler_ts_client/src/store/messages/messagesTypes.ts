@@ -1,9 +1,22 @@
-export interface Message {
+export interface IMessage {
 	_id: string,
 	text: string,
 	// Option to create a more specific Date type here
 	createdAt: number,
-	author: string 
+	updatedAt: number,
+	author: IAuthorProp 
 }
 
-export type AllMessages = Message [];
+export interface IAuthorProp {
+	_id: string,
+
+	photos: {_id: string, value: string} [],
+	
+	createdAt: string,
+
+	updatedAt: string,
+
+	displayName: string
+}
+
+export type AllMessages = IMessage [];

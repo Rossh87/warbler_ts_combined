@@ -10,9 +10,9 @@ import {
 	MessagesAction
 } from './messagesActions';
 
-import { AllMessages, Message } from './messagesTypes';
+import { AllMessages, IMessage } from './messagesTypes';
 
-const filterDeletedMessage = (state: AllMessages, msgID: Message['_id']): AllMessages => {
+const filterDeletedMessage = (state: AllMessages, msgID: IMessage['_id']): AllMessages => {
 	return(
 		state.filter(msg => {
 			return msg._id !== msgID;

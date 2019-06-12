@@ -33,30 +33,32 @@ interface Props extends RouteComponentProps, WithStyles<typeof styles> {
 export const Navbar: React.FC<Props> = ({classes, user, history, dispatch}) => {
     const renderButtons = (authStatus: boolean) => {
         return authStatus ?
-            <Button onClick={() => signOut(dispatch)} color='inherit' variant='contained'>
-                <a href = 'http://localhost:8001/auth/signout'>Signout</a>
-            </Button>
+                <Button 
+                    onClick={() => signOut(dispatch)} 
+                    variant='contained'
+                    color='primary'
+                >
+                    signout
+                </Button>
+
+            
             :
-            <div>                
-                <Button onClick={() => history.push('/signin')} variant='contained' color='inherit'>signin</Button>
-            </div>
+                <Button onClick={() => history.push('/signin')} variant='contained' color='primary'>signin</Button>
     };
 	return(
         
         <div className={classes.root}>
-            <AppBar>
+            <AppBar className={classes.floatRight}>
                 <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                    <IconButton className={classes.menuButton} color="primary" aria-label="Menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" color="inherit" className={classes.grow}>
+                    <Typography variant="h6" color="primary" className={classes.grow}>
                     Warbler
                     </Typography>
-                    {renderButtons(user.isAuthorized)}
-                    <Button onClick={() => history.push('/messages/new')}>
-                        Create Message
-                    </Button>
                 </Toolbar>
+
+                    {renderButtons(user.isAuthorized)}
             </AppBar>
         </div>
     );
