@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import {Paper, Container, Grid} from '@material-ui/core';
 
 // Local Components
-import Message from '../Message';
+import MessageGrid from '../../molecules/MessageGrid';
 
 // This is just a type
 import {Dispatch} from 'redux';
 
 // Get types that describe Redux state
-import {RootState} from '../../store/rootReducer';
-import {UserState} from '../../store/user/userTypes';
-import {IMessage} from '../../store/messages/messagesTypes';
+import {RootState} from '../../../store/rootReducer';
+import {UserState} from '../../../store/user/userTypes';
+import {IMessage} from '../../../store/messages/messagesTypes';
 
 // Get functions to request and dispatch API data
-import {useFetchAllMsgs, useFetchUser} from '../../utils/networkSvcs';
+import {useFetchAllMsgs, useFetchUser} from '../../../utils/networkSvcs';
 
 interface Props extends RootState {
     dispatch: Dispatch
@@ -27,18 +27,10 @@ export const Main: React.FC<Props> = ({user, messages, dispatch}) => {
     useFetchAllMsgs(baseURL + 'messages', dispatch);
     useFetchUser(baseURL + 'user', dispatch);
 
-    const buildMessages = (messages: Props['messages']): ReactElement [] => {
-        return messages.map(msg => {
-            return (
-                <Message {...msg} key={msg._id} />
-            )
-        })
-    };
-
     return(
         <Container maxWidth='lg'>
             <Grid container>
-                {buildMessages(messages)}
+                <MessageGrid messages={messages} />
             </Grid>
         </Container>
     );

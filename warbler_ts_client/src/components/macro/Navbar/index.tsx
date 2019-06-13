@@ -8,9 +8,9 @@ import {compose, Dispatch} from 'redux';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 // Type for entire redux state
-import {RootState} from '../../store/rootReducer';
+import {RootState} from '../../../store/rootReducer';
 
-import {signOut} from '../../utils/networkSvcs';
+import {signOut} from '../../../utils/networkSvcs';
 
 // Get Material UI deps
 import AppBar from '@material-ui/core/Toolbar';
@@ -40,27 +40,24 @@ export const Navbar: React.FC<Props> = ({classes, user, history, dispatch}) => {
                 >
                     signout
                 </Button>
-
-            
             :
                 <Button onClick={() => history.push('/signin')} variant='contained' color='primary'>signin</Button>
     };
+
 	return(
-        
-        <div className={classes.root}>
-            <AppBar className={classes.floatRight}>
-                <Toolbar>
-                    <IconButton className={classes.menuButton} color="primary" aria-label="Menu">
+            <AppBar className={classes.root}>
+                <Toolbar >
+                    <IconButton aria-label="Menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" color="primary" className={classes.grow}>
-                    Warbler
+                    <Typography variant="h6" color='textPrimary'>
+                        Warbler
                     </Typography>
+                    
                 </Toolbar>
 
-                    {renderButtons(user.isAuthorized)}
+                {renderButtons(user.isAuthorized)}
             </AppBar>
-        </div>
     );
 };
 

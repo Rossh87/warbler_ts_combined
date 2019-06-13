@@ -10,9 +10,9 @@ export interface INetUser {
 
     provider: string,
 
-    photos: {value: string} [],
+    photos: {_id: string, value: string} [],
 
-    emails: {value: string} [],
+    emails: {_id: string, value: string} [],
 
     messages: string []
 };

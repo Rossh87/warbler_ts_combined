@@ -3,10 +3,10 @@ import {Route, Switch} from 'react-router-dom';
 
 // Local components
 import Navbar from '../Navbar';
-import AuthModal from '../AuthModal';
+import AuthModal from '../../molecules/AuthModal';
 import Landing from '../Landing';
 import Main from '../Main';
-import MessageForm from '../MessageForm';
+import MessageForm from '../../molecules/MessageForm';
 
 const App: React.FC = () => {
 	return(

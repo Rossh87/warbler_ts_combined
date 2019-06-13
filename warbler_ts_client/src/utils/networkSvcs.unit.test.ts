@@ -24,7 +24,7 @@ describe('The function for fetching message data from API server', () => {
     });
 
     it('dispatches the response data with the correct action', async () => {
-        const mockAction = populateMessages(mockMessages);
+        const mockAction = populateMessages(mockMessages as any);
 
         await fetchAllMsgs('api/messages', dispatch);
 
@@ -55,6 +55,6 @@ describe('The function to create a new message on the API server', () => {
         const data = 'This is a message string';
         await createMessage(url, data);
 
-        expect(axios.post).toHaveBeenLastCalledWith(url, data)
+        expect(axios.post).toHaveBeenLastCalledWith(url, {text: data})
     });
 });

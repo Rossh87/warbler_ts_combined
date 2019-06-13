@@ -4,10 +4,16 @@ import userReducer from './userReducer';
 // Get action creators
 import {populateUser, depopulateUser} from './userActions';
 
-// Get neeed types
+// Get needed types
 import {UserState} from './userTypes';
+import {INetUser} from '../../utils/networkTypes'
 
-let initState: UserState, popState: UserState;
+// mock data factory
+import {genMock} from '../../../__mocks__/mockData';
+
+let initState: UserState,
+    netUser: INetUser,
+    stateUser: UserState
 
 beforeEach(() => {
     initState = {
@@ -29,39 +35,24 @@ beforeEach(() => {
         isAuthorized: false
     }
 
-    popState = {
-        displayName: 'someUser',
+    netUser = genMock({mockType: 'netUser'}).mockData;
 
-        name: {
-            familyName: 'Khan',
-            givenName: 'Genghis'
-        },
-
-        provider: 'facebook',
-
-        photos: [{value: 'photourl.com'}],
-
-        emails: [{value: 'mail@mail.com'}],
-
-        messages: ['123', '456'],
-
-        isAuthorized: false
-    }
+    stateUser = Object.assign(netUser, {isAuthorized: true});
 });
 
 describe('The user data reducer function', () => {
    it('correctly populates user state when hit with populate action and payload data', () => {
-       const result = userReducer(
+        const result = userReducer(
            initState,
-           populateUser(popState)
-       );
+           populateUser(netUser)
+        );
 
-       expect(result).toEqual(popState);
+        expect(result).toEqual(stateUser);
    });
 
    it('resets state to initial state when hit with reset action', () => {
        const result = userReducer(
-           popState,
+           stateUser,
            depopulateUser()
        );
 

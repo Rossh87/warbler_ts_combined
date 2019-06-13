@@ -6,7 +6,7 @@ import {match} from 'react-router-dom'
 import {Dialog, DialogTitle, TextField, Button, DialogContent, DialogActions} from '@material-ui/core';
 
 // Get function to send new message to API for creation in the backend
-import {createMessage} from '../../utils/networkSvcs';
+import {createMessage} from '../../../utils/networkSvcs';
 
 interface Props {
     history: History

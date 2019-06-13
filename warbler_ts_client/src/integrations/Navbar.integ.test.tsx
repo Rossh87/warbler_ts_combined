@@ -4,7 +4,7 @@ import {render, ProviderRoot, cleanup, fireEvent} from '../utils/testUtils';
 import 'jest-dom/extend-expect';
 
 // Get App component to render full tree w/ providers
-import App from '../components/App';
+import App from '../components/macro/App';
 
 afterEach(() => {
     cleanup();

@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '.';
-import {render, ProviderRoot, cleanup, fireEvent} from '../../utils/testUtils';
+import {render, ProviderRoot, cleanup, fireEvent} from '../../../utils/testUtils';
 import { Provider } from 'react-redux';
 import {withRouter} from 'react-router-dom';
 

@@ -7,22 +7,23 @@ import {Grid, Typography, Paper, Avatar, withStyles, WithStyles} from '@material
 import styles from './styles';
 
 // Type for message prop
-import {IMessage} from '../../store/messages/messagesTypes';
+import {IMessage} from '../../../store/messages/messagesTypes';
 
 interface Props extends IMessage, WithStyles<typeof styles> {
 
 }
 
 const Message: React.FC<Props> = ({text, author, classes}) => {
+    
     // If message author has a photo on file, use it.  Otherwise, use first initial of
     // displayName.
     const determineAvatar = (author: Props['author']): React.ReactElement => {
         const firstInit = author.displayName.slice(0,1);
 
         return author.photos.length ?
-            <Avatar src={author.photos[0].value} />
+            <Avatar src={author.photos[0].value} data-testid='photo-avatar'/>
             :
-            <Avatar>{firstInit}</Avatar>
+            <Avatar data-testid='init-avatar'>{firstInit}</Avatar>
     };
 
     return(

@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import {ProviderRoot} from './ProviderRoot';
 
 // Get local components
-import App from './components/App';
+import App from './components/macro/App';
 
 const root = document.getElementById('root') as HTMLElement;
 
