@@ -25,7 +25,7 @@ const MessageGrid: React.FC<Props> = ({messages}) => {
     };
 
     return(
-        <Grid container>
+        <Grid item container xs={9}>
             {buildMessages()}
         </Grid>
     )

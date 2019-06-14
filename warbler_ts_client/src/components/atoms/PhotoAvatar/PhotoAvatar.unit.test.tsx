@@ -12,8 +12,8 @@ afterEach(() => {
     cleanup();
 });
 
-describe('the Message component', () => {
-    it('displays a photo if one is present on author prop', () => {
+describe('the PhotoAvatar component', () => {
+    it('displays a photo if one is present on the user prop it receives', () => {
         const {mockData, hook} = genMock({mockType: 'message'});
         const {queryByTestId} = render(<Message {...mockData}/>);
 

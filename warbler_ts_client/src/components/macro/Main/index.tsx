@@ -1,11 +1,12 @@
 import React, { useEffect, ReactElement } from 'react';
-import {connect} from 'react-redux';
+import {connect, Connect, MapStateToProps} from 'react-redux';
 
 // MUI components
 import {Paper, Container, Grid} from '@material-ui/core';
 
 // Local Components
 import MessageGrid from '../../molecules/MessageGrid';
+import ProfileCard from '../ProfileCard';
 
 // This is just a type
 import {Dispatch} from 'redux';
@@ -30,13 +31,16 @@ export const Main: React.FC<Props> = ({user, messages, dispatch}) => {
     return(
         <Container maxWidth='lg'>
             <Grid container>
+                <ProfileCard user={user} />
                 <MessageGrid messages={messages} />
             </Grid>
         </Container>
     );
 };
 
-const mapStateToProps = (state: RootState) => ({
+// Main component gets the whole store, so we can use the RootState for both
+// the 'return type' type arg and the 'redux state' type arg
+const mapStateToProps: MapStateToProps<RootState, Props, RootState> = (state) => ({
     user: state.user,
     messages: state.messages
 });
