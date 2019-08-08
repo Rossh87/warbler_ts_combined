@@ -1,60 +1,41 @@
-import {fetchAllMsgs, fetchUser, createMessage} from './networkSvcs';
+// The functions we'll be testing
+import { requestUserData, requestMessageData, buildURL } from "./networkSvcs";
 
-// Jest automocks this by default
-import axios from 'axios';
+// Jest will automock this from the __mocks__ folder.  However, we don't need that
+// more complicated mock for these tests, so we override *that* mock with another,
+// simpler mock in the next lines.
+import axios from "axios";
 
-// Get mock data shapes to assert on
-import {mockMessages, mockUser} from '../../__mocks__/mockData';
-
-// Get action creator.  Xform mock data into action to assert against
-import { populateMessages } from '../store/messages/messagesActions';
-import {populateUser} from '../store/user/userActions';
-
-// Mock the dispatch function that we'll pass in as a param to the hook
-let dispatch = jest.fn();
-
-afterEach(() => {jest.clearAllMocks()});
-
-describe('The function for fetching message data from API server', () => {
-    it('makes a get request to the correct URL', async () => {
-
-        await fetchAllMsgs('api/messages', dispatch);
-
-        expect(axios.get).toHaveBeenCalledWith('api/messages');
-    });
-
-    it('dispatches the response data with the correct action', async () => {
-        const mockAction = populateMessages(mockMessages as any);
-
-        await fetchAllMsgs('api/messages', dispatch);
-
-        expect(dispatch).toHaveBeenCalledWith(mockAction);
-    })
+jest.mock("axios", () => {
+    return {
+        get: jest.fn(),
+        // we add this property so the test doesn't error out,
+        // since functions being tested set this property in their own modules
+        defaults: {
+            withCredentials: false
+        }
+    };
 });
 
-describe('The function for fetching user data from API server', () => {
-    it('makes a get request to the correct url', async () => {
+import { API_DEV_URL } from "../CONSTANTS";
 
-        await fetchUser('api/user', dispatch);
-
-        expect(axios.get).toHaveBeenCalledWith('api/user');
+describe("helper function to construct URL strings", () => {
+    it("returns an accurate string", () => {
+        const expected = `${API_DEV_URL}test`;
+        expect(buildURL("test")).toEqual(expected);
     });
-
-    it('dispatches the response data with the correct action', async () => {
-        const mockAction = populateUser(mockUser);
-
-        await fetchUser('api/user', dispatch);
-
-        expect(dispatch).toHaveBeenCalledWith(mockAction);
-    })
 });
 
-describe('The function to create a new message on the API server', () => {
-    it('makes a post request with the correct data', async () => {
-        const url = 'api/messages';
-        const data = 'This is a message string';
-        await createMessage(url, data);
+describe("function to request user data from API", () => {
+    it("calls axios.get with the passed param string", () => {
+        const result = requestUserData();
+        expect(axios.get).toHaveBeenCalledWith(buildURL("user"));
+    });
+});
 
-        expect(axios.post).toHaveBeenLastCalledWith(url, {text: data})
+describe("function to request message data from API", () => {
+    it("calls axios.get with passed param string", () => {
+        const result = requestMessageData();
+        expect(axios.get).toHaveBeenCalledWith(buildURL("messages"));
     });
 });

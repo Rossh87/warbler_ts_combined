@@ -24,7 +24,6 @@ interface Props extends RootState {
 };
 
 export const Main: React.FC<Props> = ({user, messages, dispatch}) => {
-    const baseURL = 'http://localhost:8001/api/';
     useFetchAllMsgs(baseURL + 'messages', dispatch);
     useFetchUser(baseURL + 'user', dispatch);
 

@@ -1,77 +1,23 @@
 // Network request library for quality of life
-import axios from 'axios';
+import axios, { AxiosPromise } from "axios";
 
-// Get a type for dispatch function we'll pass in to hook
-import {Dispatch} from 'redux';
+import { API_DEV_URL, API_PRODUCTION_URL } from "../CONSTANTS";
+
+// Get types
+import { IUserData } from "../store/user/userTypes";
+import { TAllMessages } from "../store/messages/messagesTypes";
 
 // configure axios to pass along our session cookies, which
 // it does *not* do by default
 axios.defaults.withCredentials = true;
 
-// Get action creators
-import {populateMessages, clearMessages} from '../store/messages/messagesActions';
-import {populateUser, depopulateUser} from '../store/user/userActions';
-import { useEffect } from 'react';
+const baseURL =
+    process.env.NODE_ENV === "production" ? API_PRODUCTION_URL : API_DEV_URL;
 
-// Request all messages from API server and dispatch response.  We'll wrap this logic
-// in a hook later, since that part doesn't need to be unit tested
-export const fetchAllMsgs = async (url: string, dispatchFn: Dispatch): Promise<void> => {
-    try {
-        const res = await axios.get(url);
+export const buildURL = (path: string): string => API_DEV_URL + path;
 
-        dispatchFn(populateMessages(res.data));
-    }
-    
-    catch(err) {
-        // TODO: ADD ERROR HANDLING TO UI AND REDUX STATE
-        console.error(err);
-    }
-}
+export const requestUserData = (): AxiosPromise<IUserData> =>
+    axios.get(buildURL("user"));
 
-// Request authorized user data from API server
-export const fetchUser = async (url: string, dispatchFn: Dispatch): Promise<void> => {
-    try {
-        const res = await axios.get(url);
-
-        dispatchFn(populateUser(res.data));
-    }
-
-    catch(err) {
-        // TODO: ADD ERROR HANDLING
-        console.error(err)
-    }
-}
-
-// Send content of a new message to API server for creation in database
-export const createMessage = async (url:string, text: string): Promise<void> => {
-    try {
-        await axios.post(url, {text});
-    }
-
-    catch(err) {
-        // TODO: ADD ERROR HANDLING
-        console.error(err);
-    }
-}
-
-// Log user out--empty redux store
-export const signOut = (dispatch: Dispatch) => {
-    dispatch(clearMessages());
-    dispatch(depopulateUser());
-}
-
-// Now we wrap our network handlers in useEffect to make hooks
-export const useFetchAllMsgs = (url: string, dispatch: Dispatch): void => {
-    useEffect(() => {
-        fetchAllMsgs(url, dispatch);
-    }, [])
-};
-
-export const useFetchUser = (url: string, dispatch: Dispatch): void => {
-    useEffect(() => {
-        fetchUser(url, dispatch)
-    }, []);
-}
-
-
-
+export const requestMessageData = (): AxiosPromise<TAllMessages> =>
+    axios.get(buildURL("messages"));

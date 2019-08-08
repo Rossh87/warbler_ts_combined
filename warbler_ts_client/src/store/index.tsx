@@ -10,6 +10,10 @@ import {createStore, applyMiddleware} from 'redux';
 // includes a property for devtools extension
 import {composeWithDevTools} from 'redux-devtools-extension';
 
+// Saga biz
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './rootSaga';
+
 // Get main reducer
 import rootReducer from './rootReducer';
 
@@ -18,14 +22,19 @@ interface Props {
 }
 
 // Store component renders all children with access to
-// redux store for reuse in testing
+// redux store.  mockStore prop can be used for testing
 const Store: React.FC<Props> = ({children, mockStore}) => {
+    const sagaWare = createSagaMiddleware();
 
     const bareStore = createStore(
         rootReducer,
         mockStore,
-        composeWithDevTools()
+        composeWithDevTools(
+            applyMiddleware(sagaWare)
+        )
     );
+
+    sagaWare.run(rootSaga)
 
     return(
         <Provider store={bareStore}>
