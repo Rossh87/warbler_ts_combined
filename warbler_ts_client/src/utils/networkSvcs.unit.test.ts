@@ -17,11 +17,11 @@ jest.mock("axios", () => {
     };
 });
 
-import { API_DEV_URL } from "../CONSTANTS";
+import { API_URL } from "../CONSTANTS";
 
 describe("helper function to construct URL strings", () => {
     it("returns an accurate string", () => {
-        const expected = `${API_DEV_URL}test`;
+        const expected = `${API_URL}test`;
         expect(buildURL("test")).toEqual(expected);
     });
 });
