@@ -23,5 +23,5 @@ export interface IUserData {
 }
 
 export interface IUserState extends IUserData {
-    isAuthorized: boolean;
+    sessionIsActive: boolean;
 }

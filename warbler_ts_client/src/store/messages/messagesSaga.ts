@@ -11,10 +11,12 @@ import { requestMessageData } from "../../utils/networkSvcs";
 import { populateMessagesAction, fetchMessagesAction } from "./messagesActions";
 import { createErrorAction, clearErrorAction } from "../error/errorActions";
 
-const fetchMessages = function*() {
+// Note that we have to grab the 'data' property off the resolved promise from requestUserData,
+// since it represents a response from the 'axios' library.
+export const fetchMessages = function*() {
     try {
         const messages = yield call(requestMessageData);
-        yield put(populateMessagesAction(messages));
+        yield put(populateMessagesAction(messages.data));
     } catch (err) {
         yield put(createErrorAction(err));
     }

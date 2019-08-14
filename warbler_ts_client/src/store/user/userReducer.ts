@@ -10,6 +10,8 @@ import { Reducer } from "redux";
 import {
     populateUserAction,
     depopulateUserAction,
+    activeSessionAction,
+    checkForSessionAction,
     TUserAction
 } from "./userActions";
 
@@ -35,7 +37,7 @@ const initState: IUserState = {
 
     updatedAt: "",
 
-    isAuthorized: false
+    sessionIsActive: false
 };
 
 const userReducer: Reducer<IUserState, TUserAction> = (
@@ -44,12 +46,15 @@ const userReducer: Reducer<IUserState, TUserAction> = (
 ): IUserState => {
     switch (action.type) {
         case getType(populateUserAction):
-            return { ...state, ...action.payload, isAuthorized: true };
+            return { ...state, ...action.payload, sessionIsActive: true };
             break;
 
         case getType(depopulateUserAction):
             return { ...initState };
             break;
+
+        case getType(activeSessionAction):
+            return { ...state, sessionIsActive: action.payload };
 
         default:
             return state;

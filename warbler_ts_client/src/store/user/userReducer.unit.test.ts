@@ -2,7 +2,11 @@
 import userReducer from "./userReducer";
 
 // Get action creators
-import { populateUserAction, depopulateUserAction } from "./userActions";
+import {
+    populateUserAction,
+    depopulateUserAction,
+    activeSessionAction
+} from "./userActions";
 
 // Get needed types
 import { IUserState, IUserData } from "./userTypes";
@@ -32,7 +36,7 @@ beforeEach(() => {
 
         messages: [],
 
-        isAuthorized: false
+        sessionIsActive: false
     };
 
     netUser = {
@@ -58,7 +62,7 @@ beforeEach(() => {
         updatedAt: "2019-08-08T01:37:41.394Z"
     };
 
-    stateUser = Object.assign(netUser, { isAuthorized: true });
+    stateUser = Object.assign(netUser, { sessionIsActive: true });
 });
 
 describe("The user data reducer function", () => {
@@ -82,5 +86,16 @@ describe("The user data reducer function", () => {
         );
 
         expect(result).toEqual(initState);
+    });
+
+    it("sets user session to active when hit with correct action type", () => {
+        const action = activeSessionAction(true);
+
+        const result = userReducer(initState, action);
+
+        const expected = Object.assign(initState, {
+            sessionIsActive: action.payload
+        });
+        expect(result).toEqual(expected);
     });
 });

@@ -21,7 +21,7 @@ import { API_URL } from "../CONSTANTS";
 
 describe("helper function to construct URL strings", () => {
     it("returns an accurate string", () => {
-        const expected = `${API_URL}test`;
+        const expected = `${API_URL}api/test`;
         expect(buildURL("test")).toEqual(expected);
     });
 });
