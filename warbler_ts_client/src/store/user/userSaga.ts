@@ -10,7 +10,7 @@ import { requestUserData } from "../../utils/networkSvcs";
 // Types
 import { call, put, takeLatest } from "redux-saga/effects";
 
-const fetchUser = function*() {
+export const fetchUser = function*() {
     try {
         const userData = yield call(requestUserData);
         yield put(populateUserAction(userData));
