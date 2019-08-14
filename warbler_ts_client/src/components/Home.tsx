@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
-import { conditionalRender } from "../utils/componentUtils";
 import { Switch, Route } from "react-router-dom";
 import UserHome from "./UserHome/UserHome";
 import Landing from "./Landing/Landing";
