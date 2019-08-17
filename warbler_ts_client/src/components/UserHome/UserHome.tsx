@@ -1,5 +1,10 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/rootReducer";
+import {
+    makeLoadingSelector,
+    conditionalRender
+} from "../../utils/componentUtils";
 
 // MUI deps
 import { Grid } from "@material-ui/core";
@@ -10,8 +15,9 @@ import { Theme } from "@material-ui/core";
 import LeftNav from "../LeftNav/LeftNav";
 import CenterContent from "../CenterContent/ContentSwitch";
 import RightFeed from "../RightFeed/RightFeed";
+import Loading from "../Loading";
 
-// Action creators
+// Action creator
 import { fetchUserAction } from "../../store/user/userActions";
 import { fetchMessagesAction } from "../../store/messages/messagesActions";
 
@@ -23,14 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const UserHome: FunctionComponent = (props) => {
+const SiteContent: FunctionComponent = (props) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchUserAction());
-        dispatch(fetchMessagesAction());
-    }, []);
 
     return (
         <Grid container justify="center">
@@ -47,6 +47,21 @@ const UserHome: FunctionComponent = (props) => {
             </Grid>
         </Grid>
     );
+};
+
+const UserHome: FunctionComponent = (props) => {
+    const dispatch = useDispatch();
+    const dataReady = useSelector(
+        makeLoadingSelector(["user", "messages"], "ready")
+    );
+
+    useEffect(() => {
+        dispatch(fetchUserAction());
+        dispatch(fetchMessagesAction());
+    }, []);
+
+    const renderContent = conditionalRender(dataReady, SiteContent, Loading);
+    return renderContent();
 };
 
 export default UserHome;

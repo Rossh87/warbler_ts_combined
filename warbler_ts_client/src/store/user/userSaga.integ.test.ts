@@ -3,6 +3,8 @@ import { fetchUser, checkForSession } from "./userSaga";
 import axios from "axios";
 import { buildURL } from "../../utils/networkSvcs";
 import { populateUserAction, activeSessionAction } from "./userActions";
+import { userLoadingAction } from "../loadingState/loadingStateActions";
+import { debug } from "util";
 
 jest.mock("axios", () => {
     // model the axios response object, which keeps the actual response JSON
@@ -48,21 +50,30 @@ describe("fetchUser", () => {
         expect(axios.get).toHaveBeenCalledWith(buildURL("user"));
     });
 
-    it("dispatches correct actions with response data", async () => {
+    it("correctly synchronizes loading state of user with dispatching of data", async () => {
         const dispatched: any = [];
         const result = await runSaga(
             {
-                dispatch: jest.fn((action) => dispatched.push(action)),
+                dispatch: jest.fn((action) => {
+                    dispatched.push(action);
+                }),
                 getState: () => ({ state: "someVal" })
             },
             fetchUser
         );
+        const [startLoadingUser, data, clearLoadingUser] = dispatched;
 
-        expect(dispatched[0]).toEqual(
+        expect(dispatched.length).toBe(3);
+
+        expect(startLoadingUser).toEqual(userLoadingAction("loading"));
+
+        expect(data).toEqual(
             populateUserAction({
                 user: "someData"
             } as any)
         );
+
+        expect(clearLoadingUser).toEqual(userLoadingAction("ready"));
     });
 });
 

@@ -7,6 +7,10 @@ import {
     checkForSessionAction,
     activeSessionAction
 } from "./userActions";
+import {
+    userLoadingAction,
+    messagesLoadingAction
+} from "../loadingState/loadingStateActions";
 import { createErrorAction } from "../error/errorActions";
 
 // Get network utils
@@ -19,8 +23,10 @@ import { call, put, takeLatest } from "redux-saga/effects";
 // since it represents a response from the 'axios' library.
 export const fetchUser = function*() {
     try {
+        yield put(userLoadingAction("loading"));
         const userData = yield call(requestUserData);
         yield put(populateUserAction(userData.data));
+        yield put(userLoadingAction("ready"));
     } catch (err) {
         yield put(createErrorAction(err));
     }

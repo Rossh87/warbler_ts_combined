@@ -10,13 +10,16 @@ import { requestMessageData } from "../../utils/networkSvcs";
 // Action creators.  These merely generate plain actions.
 import { populateMessagesAction, fetchMessagesAction } from "./messagesActions";
 import { createErrorAction, clearErrorAction } from "../error/errorActions";
+import { messagesLoadingAction } from "../loadingState/loadingStateActions";
 
 // Note that we have to grab the 'data' property off the resolved promise from requestUserData,
 // since it represents a response from the 'axios' library.
 export const fetchMessages = function*() {
     try {
+        yield put(messagesLoadingAction("loading"));
         const messages = yield call(requestMessageData);
         yield put(populateMessagesAction(messages.data));
+        yield put(messagesLoadingAction("ready"));
     } catch (err) {
         yield put(createErrorAction(err));
     }

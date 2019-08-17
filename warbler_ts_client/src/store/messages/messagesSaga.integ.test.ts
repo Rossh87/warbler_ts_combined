@@ -4,6 +4,7 @@ import { buildURL } from "../../utils/networkSvcs";
 import { runSaga } from "redux-saga";
 import { createErrorAction } from "../error/errorActions";
 import axios from "axios";
+import { messagesLoadingAction } from "../loadingState/loadingStateActions";
 
 jest.mock("axios", () => {
     return {
@@ -38,7 +39,7 @@ describe("fetchMessages", () => {
         expect(axios.get).toHaveBeenCalledWith(buildURL("messages"));
     });
 
-    it("dispatches correct action with response data", async () => {
+    it("correctly synchronizes loading state of messages with dispatching of data", async () => {
         const dispatched: any = [];
         const result = await runSaga(
             {
@@ -48,8 +49,16 @@ describe("fetchMessages", () => {
             fetchMessages
         );
 
-        expect(dispatched[0]).toEqual(
+        const [startLoadingMessages, data, clearLoadingMessages] = dispatched;
+
+        expect(dispatched.length).toBe(3);
+
+        expect(startLoadingMessages).toEqual(messagesLoadingAction("loading"));
+
+        expect(data).toEqual(
             populateMessagesAction([{ key1: "val1" }, { key2: "val2" }] as any)
         );
+
+        expect(clearLoadingMessages).toEqual(messagesLoadingAction("ready"));
     });
 });
