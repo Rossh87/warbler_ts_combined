@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState, ReactEventHandler } from "react";
 import CenterGrid from "./CenterGrid";
 import TextInput from "../TextInput";
 import { useSelector } from "react-redux";
@@ -8,6 +8,10 @@ import ColumnItem from "../ColumnItem";
 import { createStyles, makeStyles, WithStyles } from "@material-ui/styles";
 import { Theme, Typography, Box, Avatar, TextField } from "@material-ui/core";
 
+// Local components
+import MessageDialog from "../MessageDialog";
+import UserAvatar from "../UserAvatar";
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -15,10 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: "column"
         },
 
-        avatar: {
-            width: 55,
-            height: 55,
-            marginRight: theme.spacing(1)
+        overlay: {
+            position: "absolute",
+            top: "0",
+            left: "0",
+            right: "0",
+            bottom: "0",
+            backgroundColor: "transparent"
         }
     })
 );
@@ -37,6 +44,26 @@ const CenterHeading: FunctionComponent = (props) => {
     );
 };
 
+const Transparency: FunctionComponent = (props) => {
+    const classes = useStyles();
+    const [isOpen, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose: ReactEventHandler = (e) => {
+        e.stopPropagation();
+        setOpen(false);
+    };
+
+    return (
+        <div className={classes.overlay} onClick={handleOpen}>
+            <div>Here's text to click</div>
+            <MessageDialog handleClose={handleClose} open={isOpen} />
+        </div>
+    );
+};
+
 const PseudoInput: FunctionComponent = (props) => {
     const classes = useStyles();
     const photoURL = useSelector(
@@ -44,9 +71,14 @@ const PseudoInput: FunctionComponent = (props) => {
     );
 
     return (
-        <ColumnItem display="flex" justifyContent="space-between">
-            <Avatar src={photoURL} className={classes.avatar} />
+        <ColumnItem
+            display="flex"
+            justifyContent="space-between"
+            position="relative"
+        >
+            <UserAvatar />
             <TextInput formID="PseudoInput" inputLabel="What's on your mind?" />
+            <Transparency />
         </ColumnItem>
     );
 };
