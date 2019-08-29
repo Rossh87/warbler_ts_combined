@@ -32,16 +32,15 @@ interface ILoadingSelector {
     ): Selector<RootState, boolean>;
 }
 
+// Accept an array of strings, each of which represents a key of the 'loadingState'
+// object in Redux store.  If the loadingState object at each of the passed keys === desiredValue,
+// selector returns true.  Otherwise, it returns false.  This allows us to easily generate selectors
+// That verify several pieces of store state are ready before attempting to load a component that depends
+// on those states.
 export const makeLoadingSelector: ILoadingSelector = (keys, desiredValue) => {
     if (Array.isArray(keys)) {
         return function arraySelector(state) {
-            // break this up to bamboozle the extremely broad type of Object.keys
-            // in native JS
-            const keyArray = (Object.keys(
-                state.loadingState
-            ) as unknown) as Array<keyof RootState["loadingState"]>;
-
-            return keyArray.some(
+            return keys.every(
                 (key) => state.loadingState[key] === desiredValue
             );
         };
