@@ -1,5 +1,9 @@
-import { fetchMessages } from "./messagesSaga";
-import { populateMessagesAction } from "./messagesActions";
+import { fetchMessages, addMessage } from "./messagesSaga";
+import {
+    populateMessagesAction,
+    addMessageAction,
+    createMessageAction
+} from "./messagesActions";
 import { buildURL } from "../../utils/networkSvcs";
 import { runSaga } from "redux-saga";
 import { createErrorAction } from "../error/errorActions";
@@ -17,6 +21,22 @@ jest.mock("axios", () => {
                 case "http://localhost:8001/api/messages":
                     return Promise.resolve({
                         data: [{ key1: "val1" }, { key2: "val2" }]
+                    });
+
+                default:
+                    return new Error("test route not matched");
+            }
+        }),
+
+        post: jest.fn((route, msgString) => {
+            switch (route) {
+                case "http://localhost:8001/api/messages":
+                    return Promise.resolve({
+                        data: {
+                            _id: "1",
+                            text: msgString,
+                            author: "Tim Robbins"
+                        }
                     });
 
                 default:
@@ -60,5 +80,32 @@ describe("fetchMessages", () => {
         );
 
         expect(clearLoadingMessages).toEqual(messagesLoadingAction("ready"));
+    });
+
+    describe("addMessage", () => {
+        it("calls api with correct url and dispatches the response data", async () => {
+            const dispatched = [] as any;
+            const testString = "test string";
+            const result = await runSaga(
+                {
+                    dispatch: jest.fn((action) => dispatched.push(action)),
+                    getState: () => ({ state: "someVal" })
+                },
+                addMessage,
+                createMessageAction(testString)
+            );
+
+            expect(axios.post).toHaveBeenCalledWith(
+                buildURL("messages"),
+                testString
+            );
+            expect(dispatched[0]).toEqual(
+                addMessageAction({
+                    _id: "1",
+                    text: testString,
+                    author: "Tim Robbins"
+                } as any)
+            );
+        });
     });
 });

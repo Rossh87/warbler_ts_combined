@@ -5,7 +5,8 @@ import messagesReducer from "./messagesReducer";
 import {
     populateMessagesAction,
     clearMessagesAction,
-    deleteMessage
+    deleteMessage,
+    addMessageAction
 } from "./messagesActions";
 
 // Types for test variables
@@ -57,5 +58,18 @@ describe("The messages reducer function", () => {
         const expected = [popState[1]];
 
         expect(result).toEqual(expected);
+    });
+
+    it("adds a message when passed a message w/ addMessage action", () => {
+        const newMessage = {
+            _id: "3",
+            text: "newString",
+            createdAt: "datestring",
+            updatedAt: "datestring",
+            author: <any>"Tim Gunderson"
+        };
+        const result = messagesReducer(popState, addMessageAction(newMessage));
+
+        expect(result[result.length - 1]).toEqual(newMessage);
     });
 });
