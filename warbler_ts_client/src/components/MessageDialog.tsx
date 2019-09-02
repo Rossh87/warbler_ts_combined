@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useState, ReactEventHandler } from "react";
+import React, { FunctionComponent, ReactEventHandler, useState } from "react";
+import { useDispatch } from "react-redux";
 // MUI deps
 import { createStyles, makeStyles, WithStyles } from "@material-ui/styles";
 import {
@@ -14,6 +15,7 @@ import { Cancel } from "@material-ui/icons";
 
 // Local components
 import UserAvatar from "./UserAvatar";
+import TextInput from "./TextInput";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,6 +60,7 @@ interface Props {
 
 const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
     const classes = useStyles();
+    const [msgText, setMsgText] = useState("");
 
     const textAreaProps = {
         rows: 7
@@ -78,7 +81,7 @@ const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
                     justify="space-between"
                     className={classes.modalGridTop}
                 >
-                    <IconButton>
+                    <IconButton onClick={handleClose}>
                         <Cancel />
                     </IconButton>
 
@@ -87,12 +90,16 @@ const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
 
                 <Grid className={classes.modalGrid} container>
                     <UserAvatar />
-                    <TextField
+                    <form
+                        action="
+                    
+                    <TextInput
+                        value={msgText}
+                        onChange={handleChange}
+                        variant='filled'
                         multiline
-                        className={classes.textField}
-                        id="new-chirp-field"
-                        variant="filled"
-                        inputProps={textAreaProps}
+                    />
+                    "
                     />
                 </Grid>
 
