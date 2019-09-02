@@ -1,5 +1,10 @@
 // The functions we'll be testing
-import { requestUserData, requestMessageData, buildURL } from "./networkSvcs";
+import {
+    requestUserData,
+    requestMessageData,
+    buildURL,
+    requestMessageCreation
+} from "./networkSvcs";
 
 // Jest will automock this from the __mocks__ folder.  However, we don't need that
 // more complicated mock for these tests, so we override *that* mock with another,
@@ -9,6 +14,8 @@ import axios from "axios";
 jest.mock("axios", () => {
     return {
         get: jest.fn(),
+
+        post: jest.fn(),
         // we add this property so the test doesn't error out,
         // since functions being tested set this property in their own modules
         defaults: {
@@ -37,5 +44,14 @@ describe("function to request message data from API", () => {
     it("calls axios.get with passed param string", () => {
         const result = requestMessageData();
         expect(axios.get).toHaveBeenCalledWith(buildURL("messages"));
+    });
+});
+
+describe("function to request creation of new message on server", () => {
+    it("calls axios.post w/ passed param string and data", () => {
+        const msgText = "here's some msg text";
+        const result = requestMessageCreation(msgText);
+
+        expect(axios.post).toHaveBeenCalledWith(buildURL("messages"), msgText);
     });
 });

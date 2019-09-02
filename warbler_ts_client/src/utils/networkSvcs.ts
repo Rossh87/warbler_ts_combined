@@ -5,7 +5,7 @@ import { API_URL } from "../CONSTANTS";
 
 // Get types
 import { IUserData } from "../store/user/userTypes";
-import { TAllMessages } from "../store/messages/messagesTypes";
+import { TAllMessages, IMessage } from "../store/messages/messagesTypes";
 
 // configure axios to pass along our session cookies, which
 // it does *not* do by default
@@ -22,3 +22,7 @@ export const requestMessageData = (): AxiosPromise<TAllMessages> =>
 export const requestSessionStatus = (): AxiosPromise<{
     sessionIsActive: boolean;
 }> => axios.get(buildURL("sessionStatus"));
+
+export const requestMessageCreation = (
+    msgText: string
+): AxiosPromise<IMessage> => axios.post(buildURL("messages"), msgText);

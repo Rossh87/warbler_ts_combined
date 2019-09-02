@@ -5,11 +5,19 @@ import { getType } from "typesafe-actions";
 import { takeLatest, call, put } from "redux-saga/effects";
 
 // Get network utils
-import { requestMessageData } from "../../utils/networkSvcs";
+import {
+    requestMessageData,
+    requestMessageCreation
+} from "../../utils/networkSvcs";
 
 // Action creators.  These merely generate plain actions.
-import { populateMessagesAction, fetchMessagesAction } from "./messagesActions";
-import { createErrorAction, clearErrorAction } from "../error/errorActions";
+import {
+    populateMessagesAction,
+    fetchMessagesAction,
+    createMessageAction,
+    addMessageAction
+} from "./messagesActions";
+import { createErrorAction } from "../error/errorActions";
 import { messagesLoadingAction } from "../loadingState/loadingStateActions";
 
 // Note that we have to grab the 'data' property off the resolved promise from requestUserData,
@@ -25,8 +33,18 @@ export const fetchMessages = function*() {
     }
 };
 
+export const addMessage = function*(action: any) {
+    try {
+        const newMessage = yield call(requestMessageCreation, action.payload);
+        yield put(addMessageAction(newMessage.data));
+    } catch (err) {
+        yield put(createErrorAction(err));
+    }
+};
+
 const messagesSaga = function*() {
     yield takeLatest(getType(fetchMessagesAction), fetchMessages);
+    yield takeLatest(getType(createMessageAction), addMessage);
 };
 
 export default messagesSaga;

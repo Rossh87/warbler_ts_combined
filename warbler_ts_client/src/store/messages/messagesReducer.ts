@@ -7,7 +7,8 @@ import {
     populateMessagesAction,
     deleteMessage,
     clearMessagesAction,
-    TMessagesAction
+    TMessagesAction,
+    addMessageAction
 } from "./messagesActions";
 
 // Get needed types
@@ -38,6 +39,9 @@ const messagesReducer: Reducer<TAllMessages, TMessagesAction> = (
 
         case getType(deleteMessage):
             return filterDeletedMessage(state, action.payload);
+
+        case getType(addMessageAction):
+            return [...state, action.payload];
 
         default:
             return state;
