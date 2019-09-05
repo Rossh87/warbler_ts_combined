@@ -28,13 +28,13 @@ jest.mock("axios", () => {
             }
         }),
 
-        post: jest.fn((route, msgString) => {
+        post: jest.fn((route, data) => {
             switch (route) {
                 case "http://localhost:8001/api/messages":
                     return Promise.resolve({
                         data: {
                             _id: "1",
-                            text: msgString,
+                            text: data.text,
                             author: "Tim Robbins"
                         }
                     });
@@ -81,31 +81,30 @@ describe("fetchMessages", () => {
 
         expect(clearLoadingMessages).toEqual(messagesLoadingAction("ready"));
     });
+});
 
-    describe("addMessage", () => {
-        it("calls api with correct url and dispatches the response data", async () => {
-            const dispatched = [] as any;
-            const testString = "test string";
-            const result = await runSaga(
-                {
-                    dispatch: jest.fn((action) => dispatched.push(action)),
-                    getState: () => ({ state: "someVal" })
-                },
-                addMessage,
-                createMessageAction(testString)
-            );
+describe("addMessage", () => {
+    it("calls api with correct url and dispatches the response data", async () => {
+        const dispatched = [] as any;
+        const testString = "test string";
+        const result = await runSaga(
+            {
+                dispatch: jest.fn((action) => dispatched.push(action)),
+                getState: () => ({ state: "someVal" })
+            },
+            addMessage,
+            createMessageAction(testString)
+        );
 
-            expect(axios.post).toHaveBeenCalledWith(
-                buildURL("messages"),
-                testString
-            );
-            expect(dispatched[0]).toEqual(
-                addMessageAction({
-                    _id: "1",
-                    text: testString,
-                    author: "Tim Robbins"
-                } as any)
-            );
+        expect(axios.post).toHaveBeenCalledWith(buildURL("messages"), {
+            text: testString
         });
+        expect(dispatched[0]).toEqual(
+            addMessageAction({
+                _id: "1",
+                text: testString,
+                author: "Tim Robbins"
+            } as any)
+        );
     });
 });

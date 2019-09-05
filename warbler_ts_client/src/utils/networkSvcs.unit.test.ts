@@ -52,6 +52,8 @@ describe("function to request creation of new message on server", () => {
         const msgText = "here's some msg text";
         const result = requestMessageCreation(msgText);
 
-        expect(axios.post).toHaveBeenCalledWith(buildURL("messages"), msgText);
+        expect(axios.post).toHaveBeenCalledWith(buildURL("messages"), {
+            text: msgText
+        });
     });
 });
