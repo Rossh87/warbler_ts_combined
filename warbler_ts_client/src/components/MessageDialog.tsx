@@ -1,9 +1,15 @@
-import React, { FunctionComponent, ReactEventHandler, useState } from "react";
+import React, {
+    FunctionComponent,
+    ReactEventHandler,
+    useState,
+    ChangeEvent,
+    FormEvent
+} from "react";
 import { useDispatch } from "react-redux";
+
 // MUI deps
 import { createStyles, makeStyles, WithStyles } from "@material-ui/styles";
 import {
-    TextField,
     Theme,
     Dialog,
     Paper,
@@ -17,13 +23,15 @@ import { Cancel } from "@material-ui/icons";
 import UserAvatar from "./UserAvatar";
 import TextInput from "./TextInput";
 
+// Store stuff
+import { createMessageAction } from "../store/messages/messagesActions";
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {},
 
         paper: {
-            padding: theme.spacing(4),
-            maxWidth: "800px"
+            width: "100%"
         },
 
         chirp: {
@@ -41,14 +49,12 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "100%"
         },
 
-        textField: {
-            width: "500px",
-            marginLeft: theme.spacing(1),
-            border: "none"
-        },
-
         scrollPaper: {
             transform: "translatey(-8%)"
+        },
+
+        textInput: {
+            minWidth: "600px"
         }
     })
 );
@@ -61,9 +67,22 @@ interface Props {
 const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
     const classes = useStyles();
     const [msgText, setMsgText] = useState("");
+    const dispatch = useDispatch();
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setMsgText(e.currentTarget.value);
+    };
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch(createMessageAction(msgText));
+        setMsgText("");
+        handleClose(e);
+    };
 
     const textAreaProps = {
-        rows: 7
+        rows: 7,
+        columns: 100
     };
 
     return (
@@ -73,8 +92,9 @@ const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
             }}
             open={open}
             onClose={handleClose}
+            maxWidth="lg"
         >
-            <Paper>
+            <Paper className={classes.paper}>
                 <Grid
                     container
                     flex-direction="row"
@@ -90,17 +110,17 @@ const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
 
                 <Grid className={classes.modalGrid} container>
                     <UserAvatar />
-                    <form
-                        action="
-                    
-                    <TextInput
-                        value={msgText}
-                        onChange={handleChange}
-                        variant='filled'
-                        multiline
-                    />
-                    "
-                    />
+                    <form onSubmit={handleSubmit} id="new-message">
+                        <TextInput
+                            className={classes.textInput}
+                            value={msgText}
+                            onChange={handleChange}
+                            variant="filled"
+                            multiline
+                            id="new-message-text-input"
+                            inputProps={textAreaProps}
+                        />
+                    </form>
                 </Grid>
 
                 <Grid
@@ -108,7 +128,9 @@ const MessageDialog: FunctionComponent<Props> = ({ open, handleClose }) => {
                     justify="space-between"
                     container
                 >
-                    <p>Top row</p>
+                    <Button type="submit" form="new-message">
+                        Post
+                    </Button>
                 </Grid>
             </Paper>
         </Dialog>

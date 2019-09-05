@@ -10,7 +10,8 @@ import TextField, {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flex: 1
+            flex: 1,
+            borderRadius: 100
         },
 
         input: {
@@ -24,6 +25,16 @@ interface Props extends FilledTextFieldProps {}
 const TextInput: FunctionComponent<Props> = (props) => {
     const classes = useStyles();
 
-    return <TextField {...props} />;
+    const InputProps = {
+        disableUnderline: true
+    };
+
+    return (
+        <TextField
+            InputProps={InputProps}
+            className={classes.root}
+            {...props}
+        />
+    );
 };
 export default TextInput;

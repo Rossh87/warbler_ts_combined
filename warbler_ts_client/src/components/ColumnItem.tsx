@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
+import { GridProps } from "@material-ui/core/Grid";
 // MUI deps
 import { createStyles, makeStyles, WithStyles } from "@material-ui/styles";
-import { Theme } from "@material-ui/core";
-import { Box } from "@material-ui/core";
+import { Theme, Grid } from "@material-ui/core";
 import { BoxProps } from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -14,12 +14,12 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-const ColumnItem: FunctionComponent<BoxProps> = ({ children, ...props }) => {
+const ColumnItem: FunctionComponent<GridProps> = ({ children, ...props }) => {
     const classes = useStyles();
     return (
-        <Box className={classes.root} {...props}>
+        <Grid container className={classes.root} {...props}>
             {children}
-        </Box>
+        </Grid>
     );
 };
 export default ColumnItem;

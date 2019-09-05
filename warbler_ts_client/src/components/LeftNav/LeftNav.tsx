@@ -145,7 +145,7 @@ const LeftNav: FunctionComponent = (props) => {
                 <ListItem
                     button
                     className={classes.button}
-                    to="/"
+                    to="/profile"
                     component={Link}
                 >
                     <ListItemIcon>

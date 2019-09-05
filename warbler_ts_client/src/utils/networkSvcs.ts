@@ -23,6 +23,5 @@ export const requestSessionStatus = (): AxiosPromise<{
     sessionIsActive: boolean;
 }> => axios.get(buildURL("sessionStatus"));
 
-export const requestMessageCreation = (
-    msgText: string
-): AxiosPromise<IMessage> => axios.post(buildURL("messages"), msgText);
+export const requestMessageCreation = (text: string): AxiosPromise<IMessage> =>
+    axios.post(buildURL("messages"), { text });

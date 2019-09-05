@@ -1,12 +1,15 @@
 import React, { FunctionComponent } from "react";
 import { Route, Switch } from "react-router-dom";
-import CenterHome from "./CenterHome";
 
 // MUI deps
 import theme from "../../muiTheme";
 import { Grid } from "@material-ui/core";
 import { createStyles, makeStyles, WithStyles } from "@material-ui/styles";
 import { Theme } from "@material-ui/core";
+
+// local components
+import CenterHome from "./CenterHome/CenterHome";
+import CenterProfile from "./CenterProfile/CenterProfile";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,6 +28,7 @@ const ContentSwitch: FunctionComponent = (props) => {
         <Switch>
             <Route path="/home" component={CenterHome} />
             <Route path="/notifications" component={Notify} />
+            <Route path="/profile" component={CenterProfile} />
         </Switch>
     );
 };
