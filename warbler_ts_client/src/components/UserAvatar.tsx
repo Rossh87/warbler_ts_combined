@@ -8,7 +8,10 @@ import { RootState } from "../store/rootReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {}
+        root: {
+            width: 50,
+            height: 50
+        }
     })
 );
 
@@ -20,6 +23,13 @@ const UserAvatar: FunctionComponent<Props> = (props) => {
         (state: RootState) => state.user.photos[0].value
     );
 
-    return <Avatar {...props} alt="profile photo of user" src={photoURL} />;
+    return (
+        <Avatar
+            className={classes.root}
+            {...props}
+            alt="profile photo of user"
+            src={photoURL}
+        />
+    );
 };
 export default UserAvatar;

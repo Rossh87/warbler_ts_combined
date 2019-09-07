@@ -20,18 +20,14 @@ const UserMessages: FunctionComponent = (props) => {
     const classes = useStyles();
 
     const messagesAuthoredByUser = useSelector<RootState, TAllMessages>(
-        (state) =>
-            state.messages.filter((msg) => {
-                return msg.author._id == state.user._id;
-            })
+        (state) => state.messages
     );
 
-    const renderMessages = () =>
-        messagesAuthoredByUser.map((msg) => {
-            return <MessageCard key={msg._id} {...msg} />;
-        });
+    const renderedMessages = messagesAuthoredByUser.map((msg) => {
+        return <MessageCard key={msg._id} {...msg} />;
+    });
 
-    return <Fragment>{renderMessages()}</Fragment>;
+    return <Fragment>{renderedMessages}</Fragment>;
 };
 
 export default UserMessages;

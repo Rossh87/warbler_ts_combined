@@ -2,7 +2,7 @@
 import { getType } from "typesafe-actions";
 
 // Saga effects
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, all } from "redux-saga/effects";
 
 // Get network utils
 import {
@@ -43,8 +43,10 @@ export const addMessage = function*(action: any) {
 };
 
 const messagesSaga = function*() {
-    yield takeLatest(getType(fetchMessagesAction), fetchMessages);
-    yield takeLatest(getType(createMessageAction), addMessage);
+    yield all([
+        takeLatest(getType(fetchMessagesAction), fetchMessages),
+        takeLatest(getType(createMessageAction), addMessage)
+    ]);
 };
 
 export default messagesSaga;

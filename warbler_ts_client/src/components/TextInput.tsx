@@ -10,12 +10,7 @@ import TextField, {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            flex: 1,
-            borderRadius: 100
-        },
-
-        input: {
-            borderRadius: 100
+            flex: 1
         }
     })
 );

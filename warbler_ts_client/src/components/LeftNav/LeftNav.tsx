@@ -26,7 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flex: "1",
-            justifyContent: "flex-end"
+            justifyContent: "flex-end",
+            padding: theme.spacing(1),
+            position: "sticky",
+            alignSelf: "flex-start",
+            top: "0px"
         },
 
         inner: {
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
         button: {
             width: "100%",
             justifyContent: "flex-start",
-            borderRadius: theme.spacing(2)
+            borderRadius: "30%/90%"
         },
 
         link: {

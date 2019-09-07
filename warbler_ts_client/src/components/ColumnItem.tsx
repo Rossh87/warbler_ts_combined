@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ColumnItem: FunctionComponent<GridProps> = ({ children, ...props }) => {
     const classes = useStyles();
+
     return (
         <Grid container className={classes.root} {...props}>
             {children}

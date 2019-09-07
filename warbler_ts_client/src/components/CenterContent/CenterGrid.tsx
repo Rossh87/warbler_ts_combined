@@ -10,7 +10,7 @@ import { Theme } from "@material-ui/core";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            height: "100vh",
+            height: "100%",
             borderRight: "1px solid gray",
             borderLeft: "1px solid gray",
             display: "flex",

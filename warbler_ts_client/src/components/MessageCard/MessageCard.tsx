@@ -12,7 +12,19 @@ import MessageCardMenu from "./MessageCardMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {}
+        root: {
+            borderBottom: "1px solid gray",
+            padding: theme.spacing(2),
+            "&:hover": {
+                cursor: "pointer",
+                backgroundColor: theme.palette.primary.light
+            }
+        },
+
+        avatar: {
+            width: 60,
+            height: 60
+        }
     })
 );
 
@@ -22,9 +34,10 @@ const MessageCard: FunctionComponent<Props> = (props) => {
     const classes = useStyles();
 
     return (
-        <ColumnItem>
+        <Grid container className={classes.root}>
             <Grid item xs={2}>
                 <Avatar
+                    className={classes.avatar}
                     src={props.author.photos[0].value}
                     alt="profile photo of message author"
                 />
@@ -42,7 +55,7 @@ const MessageCard: FunctionComponent<Props> = (props) => {
                 </Grid>
                 <Typography variant="body2">{props.text}</Typography>
             </Grid>
-        </ColumnItem>
+        </Grid>
     );
 };
 export default MessageCard;

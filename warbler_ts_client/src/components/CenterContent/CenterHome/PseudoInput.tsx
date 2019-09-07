@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             position: "relative"
+        },
+
+        input: {
+            borderRadius: 100,
+            paddingTop: "none",
+            marginLeft: theme.spacing(1)
         }
     })
 );
@@ -27,6 +33,11 @@ const PseudoInput: FunctionComponent = (props) => {
         (state: RootState) => state.user.photos[0].value
     );
 
+    const inputProps = {
+        className: classes.input,
+        disableUnderline: true
+    };
+
     return (
         <ColumnItem
             justify="space-between"
@@ -36,9 +47,10 @@ const PseudoInput: FunctionComponent = (props) => {
         >
             <UserAvatar />
             <TextInput
-                placeholder="What's on your mind?"
                 id="pseudo-text-input"
                 variant="filled"
+                InputProps={inputProps}
+                label="What's on your mind?"
             />
             <Transparency />
         </ColumnItem>
