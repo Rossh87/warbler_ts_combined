@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../CONSTANTS";
 
 // MUI deps
 import theme from "../../muiTheme";
@@ -21,6 +22,7 @@ import NotificationsOutlined from "@material-ui/icons/NotificationsOutlined";
 import EmailOutlined from "@material-ui/icons/EmailOutlined";
 import BookmarkBorder from "@material-ui/icons/BookmarkBorder";
 import PersonOutline from "@material-ui/icons/PersonOutline";
+import CancelOutlined from "@material-ui/icons/CancelOutlined";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -160,6 +162,23 @@ const LeftNav: FunctionComponent = (props) => {
                     </ListItemIcon>
                     <ListItemText>
                         <Typography variant="h6">Profile</Typography>
+                    </ListItemText>
+                </ListItem>
+
+                <ListItem
+                    button
+                    className={classes.button}
+                    href={`${API_URL}auth/signout`}
+                    component={"a"}
+                >
+                    <ListItemIcon>
+                        <CancelOutlined
+                            className={classes.icon}
+                            fontSize="large"
+                        />
+                    </ListItemIcon>
+                    <ListItemText>
+                        <Typography variant="h6">Sign Out</Typography>
                     </ListItemText>
                 </ListItem>
             </List>
