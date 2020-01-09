@@ -1,32 +1,24 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+### Special files/directories to ignore due to project structure ###
+#Any built directories below root
+**/build
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Created by https://www.gitignore.io/api/node,linux,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=node,linux,visualstudiocode
 
-# testing
-/coverage
+### Linux ###
+*~
 
-# production
-/build
-**/build/**
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
-# misc
-.DS_Store
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# KDE directory preferences
+.directory
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
-
-# Created by https://www.gitignore.io/api/node,windows
-# Edit at https://www.gitignore.io/?templates=node,windows
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### Node ###
 # Logs
@@ -35,6 +27,10 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Runtime data
 pids
@@ -47,6 +43,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+*.lcov
 
 # nyc test coverage
 .nyc_output
@@ -69,6 +66,9 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
+
+# TypeScript cache
+*.tsbuildinfo
 
 # Optional npm cache directory
 .npm
@@ -98,6 +98,18 @@ typings/
 # nuxt.js build output
 .nuxt
 
+# rollup.js default build output
+dist/
+
+# Uncomment the public line if your project uses Gatsby
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# https://create-react-app.dev/docs/using-the-public-folder/#docsNav
+# public
+
+# Storybook build outputs
+.out
+.storybook-out
+
 # vuepress build output
 .vuepress/dist
 
@@ -110,32 +122,19 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
+# Temporary folders
+tmp/
+temp/
 
-# Dump file
-*.stackdump
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# Folder config file
-[Dd]esktop.ini
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-#IDE
-.vscode
-
-# End of https://www.gitignore.io/api/node,windows
+# End of https://www.gitignore.io/api/node,linux,visualstudiocode
