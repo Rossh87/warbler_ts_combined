@@ -1,0 +1,19 @@
+# services depend on PORT env variable to know where to run--handle that here
+#check NODE_ENV to connect to correct database(?)
+version: "3.7"
+services:
+    client_server:
+        build: ./songbyrd_client
+        ports: [3001:3000]
+    api_server:
+        build: ./songbyrd_api_server
+        ports: [3002:3000]
+        environment: [PORT=3000, IN_DOCKER=true]
+        depends_on: [db]
+    db:
+        image: mongo
+        ports: [27017:27017]
+    nginx:
+        build: ./nginx_proxy
+        ports: [8080:8080]
+        depends_on: [client_server, api_server, db]

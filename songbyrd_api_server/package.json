@@ -7,10 +7,11 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "start": "scripts/dev-start.sh",
+        "dev-start": "scripts/dev-start.sh",
         "build": "tsc",
         "debug": "node -r dotenv/config --inspect build/index.js",
-        "test": "NODE_ENV=TEST jest"
+        "test": "NODE_ENV=TEST jest",
+        "docker-start": "NODE_ENV=production node -r dotenv/config build/index.js"
     },
     "dependencies": {
         "@types/cors": "^2.8.4",

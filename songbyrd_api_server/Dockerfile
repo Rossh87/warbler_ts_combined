@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:13.6.0-alpine3.10
 
 WORKDIR /usr/src/app
 
@@ -6,6 +6,8 @@ COPY . .
 
 RUN yarn install
 
-EXPOSE 8001
+RUN yarn tsc
 
-CMD ["yarn", "start"]
+EXPOSE 3000
+
+CMD ["yarn", "docker-start"]

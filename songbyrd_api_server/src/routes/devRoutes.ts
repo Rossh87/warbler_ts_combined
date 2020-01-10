@@ -17,11 +17,11 @@ import { ensureAuthenticated } from "../handlers/auth";
 const router = express.Router();
 
 // User routes
-router.get("/user", withCatch(respondWithUserData));
+router.get("/user", withCatch(respondWithUserData) as RequestHandler);
 
 // Message routes
-router.get("/messages", withCatch(respondWithMessages));
-router.post("/messages/create", withCatch(createMessage));
-router.delete("/messages/:id", withCatch(deleteMessage));
+router.get("/messages", withCatch(respondWithMessages) as RequestHandler);
+router.post("/messages/create", withCatch(createMessage) as RequestHandler);
+router.delete("/messages/:id", withCatch(deleteMessage) as RequestHandler);
 
 export default router;
